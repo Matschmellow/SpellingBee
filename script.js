@@ -1,4 +1,3 @@
-// Vollständige Wörterlisten (Homophone sind mit '/' getrennt)
 const wordLists = {
     beginner: [
         "aim", "air/heir", "baby", "bad", "bag", "ball/bawl", "bar", "bat", "bed", "bee/be", 
@@ -183,21 +182,11 @@ const wordLists = {
     ]
 };
 
-// Zeitlimits
-const timeLimits = {
-    beginner: 15, 
-    novice: 15, 
-    moderate: 12, 
-    advanced: 12, 
-    expert: 10, 
-    genius: 10, 
-    master: 7 
-};
+const timeLimits = { beginner: 15, novice: 15, moderate: 12, advanced: 12, expert: 10, genius: 10, master: 7 };
 
-// DOM Elemente
+// DOM Elements
 const difficultySelect = document.getElementById('difficulty');
 const startBtn = document.getElementById('start-btn');
-const submitBtn = document.getElementById('submit-btn');
 const repeatBtn = document.getElementById('repeat-btn');
 const wordInput = document.getElementById('word-input');
 const timeLeftSpan = document.getElementById('time-left');
@@ -206,23 +195,24 @@ const scoreSpan = document.getElementById('score');
 const bestStreakSpan = document.getElementById('best-streak');
 const totalCorrectSpan = document.getElementById('total-correct');
 const wpmDisplay = document.getElementById('wpm-display');
+const progressBar = document.getElementById('progress-bar');
+const practiceCheckbox = document.getElementById('practice-mode');
+const practiceDisplay = document.getElementById('practice-display');
 
-// Spielvariablen
+// Game State
 let currentValidSpellings = []; 
 let timer;
 let timeLeft;
+let maxTime;
 let streak = 0;
+let isPlaying = false;
+let typingStartTime = 0;
 
-// Statistik aus dem Local Storage laden (Daten-Persistenz)
+// Local Storage
 let bestStreak = localStorage.getItem('sb_bestStreak') ? parseInt(localStorage.getItem('sb_bestStreak')) : 0;
 let totalCorrect = localStorage.getItem('sb_totalCorrect') ? parseInt(localStorage.getItem('sb_totalCorrect')) : 0;
-
-// Initiale Stats im UI setzen
 bestStreakSpan.textContent = bestStreak;
 totalCorrectSpan.textContent = totalCorrect;
-
-// Variablen für WPM Berechnung
-let typingStartTime = 0;
 
 function speakWord(word) {
     window.speechSynthesis.cancel(); 
@@ -233,9 +223,9 @@ function speakWord(word) {
 }
 
 function startGame() {
+    isPlaying = true;
     let selectedDiff = difficultySelect.value;
     
-    // Random Modus Logik
     if (selectedDiff === 'random') {
         const categories = Object.keys(wordLists);
         selectedDiff = categories[Math.floor(Math.random() * categories.length)];
@@ -243,6 +233,7 @@ function startGame() {
     } else {
         feedbackMessage.textContent = "Listen and type...";
     }
+    feedbackMessage.style.color = "#cbd5e1";
     
     const words = wordLists[selectedDiff];
     const rawWordData = words[Math.floor(Math.random() * words.length)];
@@ -250,137 +241,196 @@ function startGame() {
     currentValidSpellings = rawWordData.split('/').map(w => w.trim().toLowerCase());
     const wordToSpeak = currentValidSpellings[0];
 
-    // UI Reset
+    // Reset UI
     wordInput.value = "";
     wordInput.classList.remove('error-shake', 'success-pop');
     wordInput.disabled = false;
-    submitBtn.disabled = false;
     repeatBtn.disabled = false;
-    startBtn.disabled = true; 
+    startBtn.style.display = "none"; // Hide start button during play
+    
     wpmDisplay.textContent = "WPM: --";
-    wpmDisplay.style.color = "#00e676";
+    wpmDisplay.style.color = "#4ade80";
     
-    feedbackMessage.style.color = "#fff";
-    
-    // WPM Timer startet jetzt
-    typingStartTime = Date.now();
+    // Practice Mode Logic
+    if (practiceCheckbox.checked) {
+        practiceDisplay.classList.remove('hidden');
+        updatePracticeDisplay("");
+    } else {
+        practiceDisplay.classList.add('hidden');
+    }
 
+    typingStartTime = Date.now();
     speakWord(wordToSpeak);
 
-    // Timer Start
-    timeLeft = timeLimits[selectedDiff];
+    // Timer Logic
+    maxTime = timeLimits[selectedDiff];
+    timeLeft = maxTime;
     timeLeftSpan.textContent = timeLeft;
-    clearInterval(timer);
+    progressBar.style.width = "100%";
+    progressBar.style.backgroundColor = "#38bdf8";
     
+    clearInterval(timer);
     timer = setInterval(() => {
         timeLeft--;
         timeLeftSpan.textContent = timeLeft;
         
+        // Update Progress Bar
+        const percentage = (timeLeft / maxTime) * 100;
+        progressBar.style.width = `${percentage}%`;
+        
         if (timeLeft <= 3) {
-            timeLeftSpan.style.color = "#ff0000"; // Roter Text bei wenig Zeit
+            timeLeftSpan.style.color = "#f87171";
+            progressBar.style.backgroundColor = "#f87171";
         } else {
-            timeLeftSpan.style.color = "#ff4d4d";
+            timeLeftSpan.style.color = "#cbd5e1";
         }
         
         if (timeLeft <= 0) {
-            endRound(false, "Time's up! The word was: " + currentValidSpellings[0]);
+            checkSpelling(true); // true = time ran out
         }
     }, 1000);
     
+    // Auto-focus immediately
     wordInput.focus();
 }
 
+function updatePracticeDisplay(typedValue) {
+    const target = currentValidSpellings[0];
+    let html = '';
+    
+    for (let i = 0; i < target.length; i++) {
+        if (i < typedValue.length) {
+            if (typedValue[i] === target[i]) {
+                html += `<span class="correct">${target[i]}</span>`;
+            } else {
+                html += `<span class="incorrect">${target[i]}</span>`;
+            }
+        } else {
+            html += `<span class="untyped">${target[i]}</span>`;
+        }
+    }
+    practiceDisplay.innerHTML = html;
+}
+
 function calculateWPM(wordLength) {
-    const timeSpentMilliseconds = Date.now() - typingStartTime;
-    const timeSpentMinutes = timeSpentMilliseconds / 60000;
-    
-    // Standard WPM Formel: (Zeichen / 5) / Zeit in Minuten
+    const timeSpentMinutes = (Date.now() - typingStartTime) / 60000;
     let wpm = Math.round((wordLength / 5) / timeSpentMinutes);
-    
-    // Begrenzung für unrealistische Werte
     if (wpm > 300) wpm = "300+"; 
-    
     return wpm;
 }
 
-function checkSpelling() {
+function checkSpelling(timeOut = false) {
+    if (!isPlaying) return;
     const userInput = wordInput.value.trim().toLowerCase();
     
     if (currentValidSpellings.includes(userInput)) {
-        // WPM berechnen
+        // Correct
         const wpm = calculateWPM(userInput.length);
         wpmDisplay.textContent = `WPM: ${wpm}`;
         
-        // Stats updaten
         streak++;
         totalCorrect++;
-        
         if (streak > bestStreak) {
             bestStreak = streak;
             localStorage.setItem('sb_bestStreak', bestStreak);
             bestStreakSpan.textContent = bestStreak;
         }
-        
         localStorage.setItem('sb_totalCorrect', totalCorrect);
-        
         scoreSpan.textContent = streak;
         totalCorrectSpan.textContent = totalCorrect;
         
         wordInput.classList.add('success-pop');
         endRound(true, "Correct! 🎉");
     } else {
+        // Incorrect
         streak = 0; 
         scoreSpan.textContent = streak;
         wpmDisplay.textContent = "WPM: 0";
-        wpmDisplay.style.color = "#ff4d4d";
+        wpmDisplay.style.color = "#f87171";
         
         wordInput.classList.add('error-shake');
-        endRound(false, `Incorrect. The spelling is: ${currentValidSpellings[0]}`);
+        let msg = timeOut ? "Time's up!" : "Incorrect!";
+        endRound(false, `${msg} It was: ${currentValidSpellings[0]}`);
     }
 }
 
 function endRound(isCorrect, message) {
+    isPlaying = false;
     clearInterval(timer);
     wordInput.disabled = true;
-    submitBtn.disabled = true;
     repeatBtn.disabled = true;
-    startBtn.disabled = false; 
     
     feedbackMessage.textContent = message;
-    feedbackMessage.style.color = isCorrect ? "#00e676" : "#ff4d4d"; 
+    feedbackMessage.style.color = isCorrect ? "#4ade80" : "#f87171"; 
     
+    // Auto-Continue Logic
     if(isCorrect) {
-        setTimeout(() => {
-            if(startBtn.disabled === false) startGame();
-        }, 1200); 
+        setTimeout(() => { startGame(); }, 800); // 0.8s pause for correct
     } else {
-        startBtn.focus();
+        setTimeout(() => { startGame(); }, 2500); // 2.5s pause to read correct spelling
     }
+}
+
+function skipWord() {
+    if (!isPlaying) return;
+    streak = 0;
+    scoreSpan.textContent = streak;
+    wordInput.classList.add('error-shake');
+    endRound(false, `Skipped. Word was: ${currentValidSpellings[0]}`);
 }
 
 // Event Listeners
 startBtn.addEventListener('click', startGame);
-submitBtn.addEventListener('click', checkSpelling);
 
 repeatBtn.addEventListener('click', () => {
     if (currentValidSpellings.length > 0) speakWord(currentValidSpellings[0]);
     wordInput.focus();
 });
 
-wordInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !submitBtn.disabled) checkSpelling();
+// Auto-Focus Check - Keeps focus inside the input area if user clicks outside
+document.addEventListener('click', (e) => {
+    if (isPlaying && !wordInput.disabled && e.target.id !== 'repeat-btn') {
+        wordInput.focus();
+    }
+});
+
+// Live Input Event für Practice Mode & Auto-Submit
+wordInput.addEventListener('input', () => {
+    const userInput = wordInput.value.toLowerCase();
+    
+    if (practiceCheckbox.checked) {
+        updatePracticeDisplay(userInput);
+        
+        // Auto-Submit ONLY in Practice Mode when exactly matching
+        if (currentValidSpellings.includes(userInput.trim())) {
+            checkSpelling();
+        }
+    }
+});
+
+// Tastatur-Shortcuts
+wordInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && isPlaying) {
+        checkSpelling();
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isPlaying) {
+        skipWord();
+    }
 });
 
 difficultySelect.addEventListener('change', () => {
     streak = 0;
     scoreSpan.textContent = streak;
-    clearInterval(timer);
-    wordInput.disabled = true;
-    submitBtn.disabled = true;
-    repeatBtn.disabled = true;
-    startBtn.disabled = false;
-    timeLeftSpan.textContent = "0";
-    wpmDisplay.textContent = "WPM: --";
-    feedbackMessage.textContent = "Difficulty changed. Click Hear New Word.";
-    feedbackMessage.style.color = "#fff";
+    if (isPlaying) {
+        clearInterval(timer);
+        isPlaying = false;
+        wordInput.disabled = true;
+        repeatBtn.disabled = true;
+        startBtn.style.display = "block";
+        feedbackMessage.textContent = "Difficulty changed. Click Start.";
+        feedbackMessage.style.color = "#cbd5e1";
+    }
 });
