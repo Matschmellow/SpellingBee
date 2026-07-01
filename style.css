@@ -1,0 +1,219 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #1a1a1d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #e0e0e0;
+}
+
+.container {
+    background-color: #24242b;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 15px rgba(0, 176, 240, 0.1);
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+}
+
+h1 {
+    color: #ffcc00;
+    margin-top: 0;
+    font-size: 2.2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+.settings {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #1a1a1d;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+select:focus {
+    border-color: #00b0f0;
+}
+
+button {
+    background-color: #00b0f0;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button:hover:not(:disabled) {
+    background-color: #0095cc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 176, 240, 0.4);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    background-color: #444;
+    color: #777;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+#start-btn {
+    background-color: #ff9900;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+#start-btn:hover:not(:disabled) {
+    background-color: #e68a00;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4);
+}
+
+.timer-wpm-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0 5px;
+}
+
+.timer-display {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff4d4d;
+    margin: 0;
+}
+
+.wpm-display {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #00e676;
+    margin: 0;
+    background: rgba(0, 230, 118, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0 20px;
+    border: 2px solid #555;
+    border-radius: 10px;
+    background-color: #1a1a1d;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #00b0f0;
+    box-shadow: 0 0 10px rgba(0, 176, 240, 0.3);
+    outline: none;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+#submit-btn {
+    flex: 1;
+    background-color: #00e676;
+}
+
+#submit-btn:hover:not(:disabled) {
+    background-color: #00c853;
+    box-shadow: 0 4px 12px rgba(0, 230, 118, 0.4);
+}
+
+#feedback-message {
+    margin-top: 25px;
+    font-weight: bold;
+    min-height: 28px;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.stats-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    background-color: #1a1a1d;
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid #333;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.highlight .stat-value {
+    color: #ffcc00;
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.error-shake {
+    animation: shake 0.4s ease-in-out;
+    border-color: #ff4d4d !important;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.success-pop {
+    animation: pop 0.3s ease-out;
+    border-color: #00e676 !important;
+}
