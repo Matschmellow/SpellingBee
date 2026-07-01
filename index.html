@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Spelling Bee Trainer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Spelling Bee Trainer 🐝</h1>
+        
+        <div class="settings">
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty">
+                <option value="beginner">Beginner</option>
+                <option value="novice">Novice</option>
+                <option value="moderate">Moderate</option>
+                <option value="advanced">Advanced</option>
+                <option value="expert">Expert</option>
+                <option value="genius">Genius</option>
+                <option value="master">Master</option>
+                <option value="random">🎲 Random Mode</option>
+            </select>
+        </div>
+
+        <button id="start-btn">Hear New Word</button>
+
+        <div class="game-area">
+            <div class="timer-wpm-row">
+                <p class="timer-display">Time: <span id="time-left">0</span>s</p>
+                <p class="wpm-display" id="wpm-display">WPM: --</p>
+            </div>
+            
+            <input type="text" id="word-input" placeholder="Type the word here..." disabled autocomplete="off" spellcheck="false">
+            
+            <div class="action-buttons">
+                <button id="submit-btn" disabled>Submit</button>
+                <button id="repeat-btn" disabled>🔁 Repeat</button>
+            </div>
+        </div>
+
+        <div id="feedback-message">Click "Hear New Word" to start!</div>
+        
+        <div class="stats-area">
+            <div class="stat-box">
+                <span>Streak</span>
+                <span id="score" class="stat-value">0</span>
+            </div>
+            <div class="stat-box highlight">
+                <span>Best Streak</span>
+                <span id="best-streak" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+                <span>Total Correct</span>
+                <span id="total-correct" class="stat-value">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
