@@ -3,28 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Spelling Bee Trainer</title>
+    <title>Spelling Bee Trainer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Spelling Bee Trainer 🐝</h1>
-        
-        <div class="settings">
-            <label for="difficulty">Difficulty:</label>
-            <select id="difficulty">
-                <option value="beginner">Beginner</option>
-                <option value="novice">Novice</option>
-                <option value="moderate">Moderate</option>
-                <option value="advanced">Advanced</option>
-                <option value="expert">Expert</option>
-                <option value="genius">Genius</option>
-                <option value="master">Master</option>
-                <option value="random">🎲 Random Mode</option>
-            </select>
-        </div>
+        <header>
+            <h1>Spelling Bee Trainer 🐝</h1>
+            
+            <div class="controls-row">
+                <div class="settings">
+                    <select id="difficulty">
+                        <option value="beginner">Beginner</option>
+                        <option value="novice">Novice</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="expert">Expert</option>
+                        <option value="genius">Genius</option>
+                        <option value="master">Master</option>
+                        <option value="random">🎲 Random</option>
+                    </select>
+                </div>
+                
+                <div class="toggle-container">
+                    <label class="switch" title="See words as you type">
+                        <input type="checkbox" id="practice-mode">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label">Practice Mode</span>
+                </div>
+            </div>
+        </header>
 
-        <button id="start-btn">Hear New Word</button>
+        <button id="start-btn">Start Training</button>
 
         <div class="game-area">
             <div class="timer-wpm-row">
@@ -32,15 +43,25 @@
                 <p class="wpm-display" id="wpm-display">WPM: --</p>
             </div>
             
-            <input type="text" id="word-input" placeholder="Type the word here..." disabled autocomplete="off" spellcheck="false">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div id="practice-display" class="hidden"></div>
             
+            <input type="text" id="word-input" placeholder="Type here..." disabled autocomplete="off" spellcheck="false" autofocus>
+            
+            <div class="action-hints">
+                <span class="hint">Press <b>Enter</b> to submit</span>
+                <span class="hint">Press <b>ESC</b> to skip</span>
+            </div>
+
             <div class="action-buttons">
-                <button id="submit-btn" disabled>Submit</button>
-                <button id="repeat-btn" disabled>🔁 Repeat</button>
+                <button id="repeat-btn" disabled>🔁 Listen Again</button>
             </div>
         </div>
 
-        <div id="feedback-message">Click "Hear New Word" to start!</div>
+        <div id="feedback-message">Click "Start Training" to begin!</div>
         
         <div class="stats-area">
             <div class="stat-box">
