@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spelling Bee Trainer</title>
+    <title>Spelling Bee Speed Trainer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,58 +11,47 @@
         <header>
             <h1>Spelling Bee Trainer 🐝</h1>
             
-            <div class="controls-row">
-                <div class="settings">
-                    <select id="difficulty">
-                        <option value="beginner">Beginner</option>
-                        <option value="novice">Novice</option>
-                        <option value="moderate">Moderate</option>
-                        <option value="advanced">Advanced</option>
-                        <option value="expert">Expert</option>
-                        <option value="genius">Genius</option>
-                        <option value="master">Master</option>
-                        <option value="random">🎲 Random</option>
-                    </select>
-                </div>
-                
-                <div class="toggle-container">
-                    <label class="switch" title="See words as you type">
-                        <input type="checkbox" id="practice-mode">
-                        <span class="slider round"></span>
-                    </label>
-                    <span class="toggle-label">Practice Mode</span>
-                </div>
+            <div class="controls">
+                <select id="difficulty">
+                    <option value="beginner">Beginner</option>
+                    <option value="novice">Novice</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="expert">Expert</option>
+                    <option value="genius">Genius</option>
+                    <option value="master">Master</option>
+                    <option value="random">🎲 Random</option>
+                </select>
+                <button id="start-btn">Start Training</button>
             </div>
         </header>
 
-        <button id="start-btn">Start Training</button>
-
-        <div class="game-area">
-            <div class="timer-wpm-row">
-                <p class="timer-display">Time: <span id="time-left">0</span>s</p>
-                <p class="wpm-display" id="wpm-display">WPM: --</p>
+        <main id="game-area" class="hidden">
+            <div class="top-bar">
+                <div class="timer-box">
+                    <span id="time-left">0</span>s
+                </div>
+                <div class="wpm-box">
+                    <span id="wpm-display">0</span> WPM
+                </div>
             </div>
             
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
 
-            <div id="practice-display" class="hidden"></div>
-            
-            <input type="text" id="word-input" placeholder="Type here..." disabled autocomplete="off" spellcheck="false" autofocus>
-            
-            <div class="action-hints">
-                <span class="hint">Press <b>Enter</b> to submit</span>
-                <span class="hint">Press <b>ESC</b> to skip</span>
+            <!-- Der magische Tipp-Bereich -->
+            <div class="typing-container" id="typing-container">
+                <div id="word-display" class="word-display">
+                    <!-- Buchstaben werden hier per JS als Spans eingefügt -->
+                </div>
+                <!-- Unsichtbares Input-Feld für mobile Tastaturen & Fokus -->
+                <input type="text" id="hidden-input" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             </div>
+            
+            <p class="hint">Type the word. Hit <b>ESC</b> to skip.</p>
+        </main>
 
-            <div class="action-buttons">
-                <button id="repeat-btn" disabled>🔁 Listen Again</button>
-            </div>
-        </div>
-
-        <div id="feedback-message">Click "Start Training" to begin!</div>
-        
         <div class="stats-area">
             <div class="stat-box">
                 <span>Streak</span>
@@ -73,7 +62,7 @@
                 <span id="best-streak" class="stat-value">0</span>
             </div>
             <div class="stat-box">
-                <span>Total Correct</span>
+                <span>Total Words</span>
                 <span id="total-correct" class="stat-value">0</span>
             </div>
         </div>
