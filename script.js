@@ -1,4 +1,4 @@
-// Vollständige Wörterlisten
+// Raw Word Lists
 const rawWordLists = {
     beginner: [ "aim", "air/heir", "baby", "bad", "bag", "ball/bawl", "bar", "bat", "bed", "bee/be", "best", "big", "bird", "blue/blew", "book", "bug", "bus", "cake", "car", "cat", "cool", "cow", "cry", "cup", "dad", "dog", "duck", "door", "eat", "egg", "elf", "end", "eye/aye", "face", "fire", "fish/phish", "five", "food", "foot", "four/for", "go", "gold", "hand", "hat", "ink", "job", "jog", "kiss", "lip", "milk", "mix", "mom", "moon", "mug", "newb/noob", "one/won", "pan", "pie/pi", "pink", "rain/reign/rein", "rat", "red/read", "ruby", "run", "sit", "size/sighs", "snow", "soda", "star", "suck", "sun/son", "stop", "tag", "tank", "tap", "three", "town", "tree", "two/too/to", "water", "wind", "word/whirred", "zoo" ],
     novice: [ "absorb", "angel", "ash", "bark", "basket", "bean/been", "bingo", "black", "bomb", "boss", "brain", "bread/bred", "brown", "bunny", "burger", "burial", "cabin", "circle", "clever", "cliff", "clock", "clutch", "comply", "convey", "crowd", "dairy", "defy", "demon/daemon", "echo", "emoji", "erupt", "exert", "exile", "film", "filter", "flower/flour", "foggy", "forbid", "fry", "gender", "ghost", "giant", "greedy", "green", "grub", "hello", "hair/hare", "hotel", "house", "human", "hunt", "hungry", "intent", "iron", "irony", "lake", "land", "length", "margin", "melt", "meow", "monk", "nest", "noble/nobel", "orange", "park", "pasta", "pear/pair", "power", "prank", "pray/prey", "proof", "quack", "queen", "quill", "rally", "random", "reply", "robust", "rot/wrought", "seed", "shake", "shark", "sigh/psi", "sock", "spring", "state", "stem", "stew", "still", "stumble", "trauma", "twin", "twist", "update", "vein/vain", "walk", "way/weigh", "white", "workout", "wrist" ],
@@ -9,7 +9,7 @@ const rawWordLists = {
     master: [ "acetylglucocoroglaucigenin", "acrocephalopolydactylousdysplasia", "adrenocorticotropin/adrenocorticotrophin", "anthropomorphization/anthropomorphisation", "antidisestablishmentarianism", "antixerophthalmic", "bourgeoisification", "bromochlorodifluoromethane", "canaliculodacryocystorhinostomy", "chargoggagoggmanchauggagoggchaubunagungamaugg", "cholangiocholecystocholedochectomy", "cholangiopancreatography", "chondromyxohemangioendotheliosarcoma", "convolvulaceous", "corticopontocerebellar", "corynebacteriumpseudotuberculosis", "counterimmunoelectrophoresis", "dehydrothiotoluidine", "dermatofibrosarcomaprotuberans", "dextrodeorsumversion", "dichlorodiphenyltrichloroethane", "diisopropylfluorophosphate", "dermatofibrosislenticularisdisseminata", "dimethyldioctadecylammoniumchloride", "eellogofusciouhipoppokunurious", "encephalocraniocutaneouslipomatosis", "erythrocytapheresis", "esophagogastroduodenoscopy/oesophagogastroduodenoscopy", "ferriprotoporphyrin", "floccinaucinihilipilification", "fluorotetraferriphlogopite", "fructosebisphosphatetriosephosphatelyase", "funkenzwangsvorstellung", "gastrocnemiosemimembranous", "gegenstandstheorie", "hematospectrophotometrically/haematospectrophotometrically", "hexakosioihexekontahexaphobia", "hippopotomonstrosesquipedaliophobia/hippopotomonstrosesquippedaliophobia", "honorificabilitudinity/honourificabilitudinity", "hypothalamicpituitaryadrenocortical", "immunoelectrochemiluminescence", "inositolphosphorylceramide", "laparohysterosalpingooophorectomy", "laryngotracheobronchitis", "loncastuximabtesirine", "lymphangioleiomyomatosis", "micropachycephalosaurus", "neohesperidindihydrochalcone", "nonanonacontanonactanonaliagon", "nucleotidylexotransferase", "orotatephosphoribosyltransferase", "otorhinolaryngological", "paroxysmalnocturnalhemoglobinuria/paroxysmalnocturnalhaemoglobinuria", "percutaneousendoscopicgastrostomy", "photoplethysmography", "phosphorodiamidatemorpholinooligomer", "pneumoencephalography", "pneumonoultramicroscopicsilicovolcanoconiosis", "polyphiloprogenitive", "pseudopseudohypoparathyroidism", "pseudorhombicuboctahedron", "psychoneuroendocrinological", "psychophysicotherapeutics", "pyrrolizidinealkaloidosis", "ribulosebisphosphatecarboxylaseoxygenase", "scaphotrapeziotrapezoidosteoarthritis", "sclerectoiridectomy", "spectrophotofluorometry", "sphenopalatineganglioneuralgia", "sphygmomanometer", "stereoelectroencephalography", "supercalifragilisticexpialidocious", "thymicstromallymphopoietin", "thyroparathyroidectomy", "tonsillopharyngitis", "uridinediphosphateglycosyltransferase", "uvulopalatopharyngoplasty", "ventriculocisternostomy", "xanthogranulomatouspyelonephritis", "zoanthroprosopometamorphopsia" ]
 };
 
-// Wörterliste "flach" machen, um / (Homophone) aufzulösen, damit das visuelle Tippen perfekt klappt
+// Flatten lists for visual typing (split homophones like "air/heir")
 const flatWordLists = {};
 for (let diff in rawWordLists) {
     flatWordLists[diff] = [];
@@ -26,6 +26,11 @@ const timeLimits = { beginner: 15, novice: 15, moderate: 12, advanced: 12, exper
 
 // DOM Elements
 const difficultySelect = document.getElementById('difficulty');
+const timerModeSelect = document.getElementById('timer-mode');
+const manualSettings = document.getElementById('manual-settings');
+const timeSlider = document.getElementById('time-slider');
+const sliderVal = document.getElementById('slider-val');
+
 const startBtn = document.getElementById('start-btn');
 const gameArea = document.getElementById('game-area');
 const hiddenInput = document.getElementById('hidden-input');
@@ -50,12 +55,19 @@ let isPlaying = false;
 let typingStartTime = 0;
 let firstKeystroke = false;
 
-// Local Storage
+// Local Storage Setup
 let bestStreak = localStorage.getItem('sb_bestStreak') ? parseInt(localStorage.getItem('sb_bestStreak')) : 0;
 let totalCorrect = localStorage.getItem('sb_totalCorrect') ? parseInt(localStorage.getItem('sb_totalCorrect')) : 0;
 bestStreakSpan.textContent = bestStreak;
 totalCorrectSpan.textContent = totalCorrect;
 
+// Restore saved slider value
+if(localStorage.getItem('sb_sliderVal')) {
+    timeSlider.value = localStorage.getItem('sb_sliderVal');
+    sliderVal.textContent = timeSlider.value + "s";
+}
+
+// Speak Function
 function speakWord(word) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(word);
@@ -64,11 +76,12 @@ function speakWord(word) {
     window.speechSynthesis.speak(utterance);
 }
 
-// Startet die nächste Runde
+// Start Next Word Sequence
 function nextWord() {
     isPlaying = true;
     let selectedDiff = difficultySelect.value;
     
+    // Pick Category
     if (selectedDiff === 'random') {
         const categories = Object.keys(flatWordLists);
         selectedDiff = categories[Math.floor(Math.random() * categories.length)];
@@ -77,23 +90,28 @@ function nextWord() {
     const words = flatWordLists[selectedDiff];
     currentWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
 
-    // UI zurücksetzen
+    // Reset UI
     hiddenInput.value = "";
     hiddenInput.disabled = false;
     wpmDisplay.textContent = "0";
     firstKeystroke = false;
     
-    // Spans für das Wort generieren
+    // Generate Spans
     wordDisplay.innerHTML = currentWord.split('').map(char => `<span class="char">${char}</span>`).join('');
     
-    // Caret an erste Stelle setzen
+    // Set Caret
     const spans = wordDisplay.querySelectorAll('.char');
     if(spans.length > 0) spans[0].classList.add('active');
 
     speakWord(currentWord);
 
-    // Timer Logik
-    maxTime = timeLimits[selectedDiff];
+    // Timer Logic
+    if (timerModeSelect.value === 'manual') {
+        maxTime = parseInt(timeSlider.value);
+    } else {
+        maxTime = timeLimits[selectedDiff] || 15; // Fallback
+    }
+
     timeLeft = maxTime;
     timeLeftSpan.textContent = timeLeft;
     progressBar.style.width = "100%";
@@ -130,7 +148,7 @@ function startGame() {
     nextWord();
 }
 
-// Berechnet WPM extrem genau
+// Calculate WPM precise
 function calculateWPM(charsTyped) {
     if (!firstKeystroke) return 0;
     const timeSpentMinutes = (Date.now() - typingStartTime) / 60000;
@@ -141,7 +159,7 @@ function calculateWPM(charsTyped) {
     return wpm;
 }
 
-// Der Kern-Tipp-Mechanismus (Monkeytype-Style)
+// Core Typing Engine
 hiddenInput.addEventListener('input', () => {
     if (!isPlaying) return;
     
@@ -149,7 +167,6 @@ hiddenInput.addEventListener('input', () => {
     const spans = wordDisplay.querySelectorAll('.char');
     let errors = 0;
 
-    // Startet die Stopuhr beim allerersten getippten Buchstaben
     if (!firstKeystroke && typed.length > 0) {
         firstKeystroke = true;
         typingStartTime = Date.now();
@@ -168,12 +185,11 @@ hiddenInput.addEventListener('input', () => {
         }
     });
 
-    // Setzt den blinkenden Cursor an die richtige Stelle
     if (typed.length < currentWord.length) {
         spans[typed.length].classList.add('active');
     }
 
-    // Wenn das Wort zu Ende getippt wurde und keine Fehler enthält -> Gewonnen!
+    // Auto-Submit on Completion
     if (typed.length === currentWord.length) {
         if (errors === 0) {
             handleEnd(true);
@@ -202,30 +218,26 @@ function handleEnd(isCorrect) {
         scoreSpan.textContent = streak;
         totalCorrectSpan.textContent = totalCorrect;
 
-        // Kurze Pause, dann direkt nächstes Wort
         setTimeout(nextWord, 500); 
     } else {
         streak = 0; 
         scoreSpan.textContent = streak;
         
-        // Zeigt das Wort komplett rot an zur Strafe/Lernen
         const spans = wordDisplay.querySelectorAll('.char');
         spans.forEach(s => {
             s.classList.remove('active', 'correct');
             s.classList.add('incorrect');
         });
         
-        // Etwas längere Pause bei Fehler
         setTimeout(nextWord, 2000);
     }
 }
 
-// Fokus in der Typing-Area halten
+// Event Listeners
 typingContainer.addEventListener('click', () => {
     if (isPlaying) hiddenInput.focus();
 });
 
-// ESC zum Überspringen
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && isPlaying) {
         streak = 0;
@@ -234,11 +246,23 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Event Listeners
 startBtn.addEventListener('click', startGame);
 
-difficultySelect.addEventListener('change', () => {
-    if (!gameArea.classList.contains('hidden')) {
-        startGame(); // Startet automatisch neu bei Wechsel
+// Settings Listeners
+timerModeSelect.addEventListener('change', () => {
+    if (timerModeSelect.value === 'manual') {
+        manualSettings.classList.remove('hidden');
+    } else {
+        manualSettings.classList.add('hidden');
     }
+    if (isPlaying) { startGame(); }
+});
+
+timeSlider.addEventListener('input', () => {
+    sliderVal.textContent = timeSlider.value + "s";
+    localStorage.setItem('sb_sliderVal', timeSlider.value);
+});
+
+difficultySelect.addEventListener('change', () => {
+    if (isPlaying) { startGame(); }
 });
