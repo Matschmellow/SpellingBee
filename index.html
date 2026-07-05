@@ -11,17 +11,30 @@
         <header>
             <h1>Spelling Bee Trainer 🐝</h1>
             
-            <div class="controls">
-                <select id="difficulty">
-                    <option value="beginner">Beginner</option>
-                    <option value="novice">Novice</option>
-                    <option value="moderate">Moderate</option>
-                    <option value="advanced">Advanced</option>
-                    <option value="expert">Expert</option>
-                    <option value="genius">Genius</option>
-                    <option value="master">Master</option>
-                    <option value="random">🎲 Random</option>
-                </select>
+            <div class="controls-wrapper">
+                <div class="controls">
+                    <select id="difficulty" title="Select Word Difficulty">
+                        <option value="beginner">Beginner</option>
+                        <option value="novice">Novice</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="expert">Expert</option>
+                        <option value="genius">Genius</option>
+                        <option value="master">Master</option>
+                        <option value="random">🎲 Random Words</option>
+                    </select>
+                    
+                    <select id="timer-mode" title="Select Time Mode">
+                        <option value="auto">⏱️ Auto Time</option>
+                        <option value="manual">⚙️ Manual Time</option>
+                    </select>
+                </div>
+
+                <div id="manual-settings" class="hidden">
+                    <input type="range" id="time-slider" min="3" max="30" value="10">
+                    <span id="slider-val">10s</span>
+                </div>
+                
                 <button id="start-btn">Start Training</button>
             </div>
         </header>
@@ -40,16 +53,16 @@
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
 
-            <!-- Der magische Tipp-Bereich -->
+            <!-- Typing Interface -->
             <div class="typing-container" id="typing-container">
                 <div id="word-display" class="word-display">
-                    <!-- Buchstaben werden hier per JS als Spans eingefügt -->
+                    <!-- Spans will be injected here -->
                 </div>
-                <!-- Unsichtbares Input-Feld für mobile Tastaturen & Fokus -->
+                <!-- Hidden input for mobile keyboard & precise tracking -->
                 <input type="text" id="hidden-input" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             </div>
             
-            <p class="hint">Type the word. Hit <b>ESC</b> to skip.</p>
+            <p class="hint">Type the word. Hit <b>ESC</b> to skip. <b>Click here to focus.</b></p>
         </main>
 
         <div class="stats-area">
