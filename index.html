@@ -24,15 +24,23 @@
                         <option value="random">🎲 Random Words</option>
                     </select>
                     
-                    <select id="timer-mode" title="Select Time Mode">
-                        <option value="auto">⏱️ Auto Time</option>
-                        <option value="manual">⚙️ Manual Time</option>
+                    <select id="timer-mode" title="Select Time Principle">
+                        <option value="adaptive">⚖️ Adaptive Time</option>
+                        <option value="timeattack">🔥 60s Time Attack</option>
+                        <option value="zen">🧘 Zen (No Timer)</option>
                     </select>
                 </div>
 
-                <div id="manual-settings" class="hidden">
-                    <input type="range" id="time-slider" min="3" max="30" value="10">
-                    <span id="slider-val">10s</span>
+                <div class="controls toggle-controls">
+                    <select id="voice-select" title="Select Voice">
+                        <option value="">Loading voices...</option>
+                    </select>
+                    
+                    <label class="toggle-switch" title="Show or hide the word before typing">
+                        <input type="checkbox" id="show-word-toggle" checked>
+                        <span class="slider"></span>
+                        <span class="label-text">Show Word</span>
+                    </label>
                 </div>
                 
                 <button id="start-btn">Start Training</button>
@@ -42,27 +50,45 @@
         <main id="game-area" class="hidden">
             <div class="top-bar">
                 <div class="timer-box">
-                    <span id="time-left">0</span>s
+                    <span id="time-left">0</span><span id="time-unit">s</span>
                 </div>
                 <div class="wpm-box">
                     <span id="wpm-display">0</span> WPM
                 </div>
             </div>
             
-            <div class="progress-bar-container">
+            <div class="progress-bar-container" id="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
 
             <!-- Typing Interface -->
             <div class="typing-container" id="typing-container">
+                
+                <!-- Summary Screen -->
+                <div id="summary-screen" class="hidden">
+                    <h2>Time's Up! ⏰</h2>
+                    <div class="summary-stats">
+                        <p>Words Spelled: <span id="final-words">0</span></p>
+                    </div>
+                    <p class="restart-hint">Press <b>Enter</b> to restart</p>
+                </div>
+
                 <div id="word-display" class="word-display">
                     <!-- Spans will be injected here -->
                 </div>
-                <!-- Hidden input for mobile keyboard & precise tracking -->
+                
                 <input type="text" id="hidden-input" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             </div>
+
+            <!-- Definition Box -->
+            <div id="definition-box" class="definition-box">
+                <span class="loading">Waiting for word...</span>
+            </div>
             
-            <p class="hint">Type the word. Hit <b>ESC</b> to skip. <b>Click here to focus.</b></p>
+            <div class="action-hints">
+                <button id="replay-btn" class="icon-btn" title="Replay Audio (TAB)">🔊 Replay Word (TAB)</button>
+                <span class="hint-text">Hit <b>ESC</b> to skip</span>
+            </div>
         </main>
 
         <div class="stats-area">
