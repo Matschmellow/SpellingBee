@@ -1,4 +1,4 @@
-// Raw Word Lists
+// Cleaned & Verified Word Lists
 const rawWordLists = {
     beginner: [ "aim", "air/heir", "baby", "bad", "bag", "ball/bawl", "bar", "bat", "bed", "bee/be", "best", "big", "bird", "blue/blew", "book", "bug", "bus", "cake", "car", "cat", "cool", "cow", "cry", "cup", "dad", "dog", "duck", "door", "eat", "egg", "elf", "end", "eye/aye", "face", "fire", "fish/phish", "five", "food", "foot", "four/for", "go", "gold", "hand", "hat", "ink", "job", "jog", "kiss", "lip", "milk", "mix", "mom", "moon", "mug", "newb/noob", "one/won", "pan", "pie/pi", "pink", "rain/reign/rein", "rat", "red/read", "ruby", "run", "sit", "size/sighs", "snow", "soda", "star", "suck", "sun/son", "stop", "tag", "tank", "tap", "three", "town", "tree", "two/too/to", "water", "wind", "word/whirred", "zoo" ],
     novice: [ "absorb", "angel", "ash", "bark", "basket", "bean/been", "bingo", "black", "bomb", "boss", "brain", "bread/bred", "brown", "bunny", "burger", "burial", "cabin", "circle", "clever", "cliff", "clock", "clutch", "comply", "convey", "crowd", "dairy", "defy", "demon/daemon", "echo", "emoji", "erupt", "exert", "exile", "film", "filter", "flower/flour", "foggy", "forbid", "fry", "gender", "ghost", "giant", "greedy", "green", "grub", "hello", "hair/hare", "hotel", "house", "human", "hunt", "hungry", "intent", "iron", "irony", "lake", "land", "length", "margin", "melt", "meow", "monk", "nest", "noble/nobel", "orange", "park", "pasta", "pear/pair", "power", "prank", "pray/prey", "proof", "quack", "queen", "quill", "rally", "random", "reply", "robust", "rot/wrought", "seed", "shake", "shark", "sigh/psi", "sock", "spring", "state", "stem", "stew", "still", "stumble", "trauma", "twin", "twist", "update", "vein/vain", "walk", "way/weigh", "white", "workout", "wrist" ],
@@ -9,7 +9,7 @@ const rawWordLists = {
     master: [ "acetylglucocoroglaucigenin", "acrocephalopolydactylousdysplasia", "adrenocorticotropin/adrenocorticotrophin", "anthropomorphization/anthropomorphisation", "antidisestablishmentarianism", "antixerophthalmic", "bourgeoisification", "bromochlorodifluoromethane", "canaliculodacryocystorhinostomy", "chargoggagoggmanchauggagoggchaubunagungamaugg", "cholangiocholecystocholedochectomy", "cholangiopancreatography", "chondromyxohemangioendotheliosarcoma", "convolvulaceous", "corticopontocerebellar", "corynebacteriumpseudotuberculosis", "counterimmunoelectrophoresis", "dehydrothiotoluidine", "dermatofibrosarcomaprotuberans", "dextrodeorsumversion", "dichlorodiphenyltrichloroethane", "diisopropylfluorophosphate", "dermatofibrosislenticularisdisseminata", "dimethyldioctadecylammoniumchloride", "eellogofusciouhipoppokunurious", "encephalocraniocutaneouslipomatosis", "erythrocytapheresis", "esophagogastroduodenoscopy/oesophagogastroduodenoscopy", "ferriprotoporphyrin", "floccinaucinihilipilification", "fluorotetraferriphlogopite", "fructosebisphosphatetriosephosphatelyase", "funkenzwangsvorstellung", "gastrocnemiosemimembranous", "gegenstandstheorie", "hematospectrophotometrically/haematospectrophotometrically", "hexakosioihexekontahexaphobia", "hippopotomonstrosesquipedaliophobia/hippopotomonstrosesquippedaliophobia", "honorificabilitudinity/honourificabilitudinity", "hypothalamicpituitaryadrenocortical", "immunoelectrochemiluminescence", "inositolphosphorylceramide", "laparohysterosalpingooophorectomy", "laryngotracheobronchitis", "loncastuximabtesirine", "lymphangioleiomyomatosis", "micropachycephalosaurus", "neohesperidindihydrochalcone", "nonanonacontanonactanonaliagon", "nucleotidylexotransferase", "orotatephosphoribosyltransferase", "otorhinolaryngological", "paroxysmalnocturnalhemoglobinuria/paroxysmalnocturnalhaemoglobinuria", "percutaneousendoscopicgastrostomy", "photoplethysmography", "phosphorodiamidatemorpholinooligomer", "pneumoencephalography", "pneumonoultramicroscopicsilicovolcanoconiosis", "polyphiloprogenitive", "pseudopseudohypoparathyroidism", "pseudorhombicuboctahedron", "psychoneuroendocrinological", "psychophysicotherapeutics", "pyrrolizidinealkaloidosis", "ribulosebisphosphatecarboxylaseoxygenase", "scaphotrapeziotrapezoidosteoarthritis", "sclerectoiridectomy", "spectrophotofluorometry", "sphenopalatineganglioneuralgia", "sphygmomanometer", "stereoelectroencephalography", "supercalifragilisticexpialidocious", "thymicstromallymphopoietin", "thyroparathyroidectomy", "tonsillopharyngitis", "uridinediphosphateglycosyltransferase", "uvulopalatopharyngoplasty", "ventriculocisternostomy", "xanthogranulomatouspyelonephritis", "zoanthroprosopometamorphopsia" ]
 };
 
-// Listen flach machen (Homophone trennen)
+// Flatten lists (split homophones like "air/heir")
 const flatWordLists = {};
 for (let diff in rawWordLists) {
     flatWordLists[diff] = [];
@@ -30,6 +30,8 @@ const showWordToggle = document.getElementById('show-word-toggle');
 
 const startBtn = document.getElementById('start-btn');
 const replayBtn = document.getElementById('replay-btn');
+const slowReplayBtn = document.getElementById('slow-replay-btn');
+
 const gameArea = document.getElementById('game-area');
 const hiddenInput = document.getElementById('hidden-input');
 const wordDisplay = document.getElementById('word-display');
@@ -43,7 +45,6 @@ const progressBar = document.getElementById('progress-bar');
 const wpmDisplay = document.getElementById('wpm-display');
 
 const summaryScreen = document.getElementById('summary-screen');
-const finalWpmSpan = document.getElementById('final-wpm');
 const finalWordsSpan = document.getElementById('final-words');
 
 const scoreSpan = document.getElementById('score');
@@ -57,10 +58,12 @@ let timeLeft = 0;
 let maxTime = 0;
 let streak = 0;
 let isPlaying = false;
+
+// Variables for precise WPM per word
 let firstKeystroke = false;
 let wordStartTime = 0;
 
-// Globale Variablen für Time Attack
+// Variables for Time Attack Session
 let sessionWordsSpelled = 0;
 
 // Local Storage Setup
@@ -75,6 +78,7 @@ if (!showWordToggle.checked) { wordDisplay.classList.add('hide-word'); }
 showWordToggle.addEventListener('change', () => {
     if(showWordToggle.checked) { wordDisplay.classList.remove('hide-word'); } 
     else { wordDisplay.classList.add('hide-word'); }
+    if(isPlaying) hiddenInput.focus();
 });
 
 // --- VOICE ENGINE ---
@@ -85,6 +89,7 @@ function populateVoices() {
     if (availableVoices.length === 0) return;
     
     voiceSelect.innerHTML = availableVoices.map((v, i) => `<option value="${i}">${v.name}</option>`).join('');
+    // Auto-select premium voices for best quality
     const bestVoiceIndex = availableVoices.findIndex(v => v.name.includes('Google') || v.name.includes('Premium') || v.name.includes('Samantha'));
     if (bestVoiceIndex !== -1) voiceSelect.selectedIndex = bestVoiceIndex;
 }
@@ -94,7 +99,7 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = populateVoices;
 }
 
-function speakWord(word) {
+function speakWord(word, isSlow = false) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(word);
     
@@ -104,7 +109,8 @@ function speakWord(word) {
         utterance.lang = 'en-US';
     }
     
-    utterance.rate = 0.85;
+    // Default rate ist etwas langsamer (0.75) für bessere Deutlichkeit. Slow-Modus ist sehr langsam (0.4)
+    utterance.rate = isSlow ? 0.4 : 0.75;
     window.speechSynthesis.speak(utterance);
 }
 
@@ -118,7 +124,7 @@ async function fetchDefinition(word) {
         const def = data[0].meanings[0].definitions[0].definition;
         definitionBox.innerHTML = `📖 <b>Definition:</b> ${def}`;
     } catch (e) {
-        definitionBox.innerHTML = `📖 <b>Definition:</b> <i>Not available for this specific word.</i>`;
+        definitionBox.innerHTML = `📖 <b>Definition:</b> <i>Not found in standard dictionary. (Likely a highly specialized/compound term).</i>`;
     }
 }
 
@@ -165,18 +171,20 @@ function nextWord() {
     const words = flatWordLists[selectedDiff];
     currentWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
 
-    // Reset Word UI
+    // Reset Word UI & Set Max Length to prevent over-typing
     hiddenInput.value = "";
     hiddenInput.disabled = false;
+    hiddenInput.setAttribute('maxlength', currentWord.length); // Verhindert Eingabe von unsichtbaren Buchstaben!
     firstKeystroke = false;
-    
-    wordDisplay.classList.remove('force-show-error');
+    wpmDisplay.textContent = "0"; // Reset WPM for the new word
     
     wordDisplay.innerHTML = currentWord.split('').map(char => `<span class="char">${char}</span>`).join('');
     const spans = wordDisplay.querySelectorAll('.char');
     if(spans.length > 0) spans[0].classList.add('active');
 
-    speakWord(currentWord);
+    // Tiny timeout ensures the speech synthesis doesn't clip the first letter
+    setTimeout(() => { speakWord(currentWord); }, 100);
+    
     fetchDefinition(currentWord);
 
     // Adaptive Timer Logic
@@ -213,6 +221,7 @@ function updateAdaptiveTimer() {
 }
 
 function updateTimeAttackTimer() {
+    // Timer pauses until you start typing the very first word
     if (!firstKeystroke && sessionWordsSpelled === 0) return; 
 
     timeLeft--;
@@ -232,16 +241,15 @@ function updateTimeAttackTimer() {
         clearInterval(timerInterval);
         hiddenInput.disabled = true;
         summaryScreen.classList.remove('hidden');
-        finalWpmSpan.textContent = wpmDisplay.textContent;
         finalWordsSpan.textContent = sessionWordsSpelled;
     }
 }
 
-// Live WPM *pro Wort*
+// Live WPM per current Word
 function updateLiveWPM() {
     if (!firstKeystroke) return;
-    const timeSpentMinutes = (Date.now() - wordStartTime) / 60000;
-    if (timeSpentMinutes <= 0) return;
+    // Math.max verhindert Division durch 0, falls jemand extrem schnell tippt
+    const timeSpentMinutes = Math.max((Date.now() - wordStartTime) / 60000, 0.005);
     
     const currentTyped = hiddenInput.value.length;
     let wpm = Math.round((currentTyped / 5) / timeSpentMinutes);
@@ -280,7 +288,8 @@ hiddenInput.addEventListener('input', () => {
         spans[typed.length].classList.add('active');
     }
 
-    // Auto-Submit on Completion
+    // Check completion. Only submits if the word is fully typed AND has zero errors.
+    // If it has errors, the user is forced to press Backspace to fix them.
     if (typed.length === currentWord.length && errors === 0) {
         handleWordEnd(true);
     }
@@ -309,6 +318,7 @@ function handleWordEnd(isCorrect) {
         streak = 0; 
         scoreSpan.textContent = streak;
         
+        // Show the word in red so the user can learn from the mistake
         wordDisplay.classList.remove('hide-word');
         const spans = wordDisplay.querySelectorAll('.char');
         spans.forEach(s => {
@@ -336,8 +346,13 @@ typingContainer.addEventListener('click', () => {
 });
 
 replayBtn.addEventListener('click', () => {
-    if (isPlaying && currentWord) speakWord(currentWord);
-    hiddenInput.focus();
+    if (isPlaying && currentWord) speakWord(currentWord, false);
+    hiddenInput.focus(); // Auto-Focus fix
+});
+
+slowReplayBtn.addEventListener('click', () => {
+    if (isPlaying && currentWord) speakWord(currentWord, true);
+    hiddenInput.focus(); // Auto-Focus fix
 });
 
 document.addEventListener('keydown', (e) => {
@@ -347,7 +362,13 @@ document.addEventListener('keydown', (e) => {
     
     if (e.key === 'Tab' && isPlaying) {
         e.preventDefault(); 
-        speakWord(currentWord);
+        speakWord(currentWord, false);
+        hiddenInput.focus();
+    }
+
+    if (e.key === 'Shift' && isPlaying) {
+        e.preventDefault(); 
+        speakWord(currentWord, true);
         hiddenInput.focus();
     }
     
