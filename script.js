@@ -1,157 +1,58 @@
 // Cleaned & Verified Word Lists
-const wordLists = {
-    beginner: [
-        "aim", "air", "heir", "baby", "bad", "bag", "ball", "bawl", "bar", "bat", "bed", "bee", "be", "best", "big", 
-        "bird", "blue", "blew", "book", "bug", "bus", "cake", "car", "cat", "cool", "cow", "cry", "cup", "dad", "dog", 
-        "duck", "door", "eat", "egg", "elf", "end", "eye", "aye", "face", "fire", "fish", "phish", "five", "food", 
-        "foot", "four", "for", "go", "gold", "hand", "hat", "ink", "job", "jog", "kiss", "lip", "milk", "mix", "mom", 
-        "moon", "mug", "newb", "noob", "one", "won", "pan", "pie", "pi", "pink", "rain", "reign", "rein", "rat", 
-        "red", "read", "ruby", "run", "sit", "size", "sighs", "snow", "soda", "star", "suck", "sun", "son", "stop", 
-        "tag", "tank", "tap", "three", "town", "tree", "two", "too", "to", "water", "wind", "word", "whirred", "zoo"
-    ],
-    novice: [
-        "absorb", "angel", "ash", "bark", "basket", "bean", "been", "bingo", "black", "bomb", "boss", "brain", 
-        "bread", "bred", "brown", "bunny", "burger", "burial", "cabin", "circle", "clever", "cliff", "clock", 
-        "clutch", "comply", "convey", "crowd", "dairy", "defy", "demon", "daemon", "echo", "emoji", "erupt", "exert", 
-        "exile", "film", "filter", "flower", "flour", "foggy", "forbid", "fry", "gender", "ghost", "giant", "greedy", 
-        "green", "grub", "hello", "hair", "hare", "hotel", "house", "human", "hunt", "hungry", "intent", "iron", 
-        "irony", "lake", "land", "length", "margin", "melt", "meow", "monk", "nest", "noble", "nobel", "orange", 
-        "park", "pasta", "pear", "pair", "power", "prank", "pray", "prey", "proof", "quack", "queen", "quill", 
-        "rally", "random", "reply", "robust", "rot", "wrought", "seed", "shake", "shark", "sigh", "psi", "sock", 
-        "spring", "state", "stem", "stew", "still", "stumble", "trauma", "twin", "twist", "update", "vein", "vain", 
-        "walk", "way", "weigh", "white", "workout", "wrist"
-    ],
-    moderate: [
-        "abolish", "absence", "abstract", "agaric", "agnostic", "akin", "albeit", "alliance", "alphabet", "anatomical", 
-        "answer", "appetite", "armor", "armour", "atone", "automatic", "await", "bamboo", "bayonet", "beach", "betray", 
-        "biography", "bizarre", "breakthrough", "broccoli", "catalog", "catalogue", "center", "centre", "chicken", 
-        "chronic", "church", "congratulate", "cooking", "creeper", "curious", "daffodil", "damage", "debris", "diesel", 
-        "dilate", "dolphin", "enact", "excellent", "familiar", "firefighter", "flavor", "flavour", "formidable", 
-        "frolic", "furious", "gallant", "garage", "gradual", "growl", "guideline", "harbor", "harbour", "heresy", 
-        "immobilize", "immobilise", "integrity", "ionize", "ionise", "jaded", "lactose", "larix", "lather", "leafy", 
-        "liable", "lightning", "magnificent", "meditate", "normal", "oasis", "obesity", "offender", "overdue", "overdo", 
-        "paradox", "password", "pigeon", "pidgin", "plethora", "powder", "present", "probably", "pulsar", "pumpkin", 
-        "pursuit", "purple", "recipient", "refrain", "refugee", "remarkable", "rye", "wry", "rooster", "scrutiny", 
-        "secret", "seldom", "semicircle", "sigma", "sleigh", "slay", "sniffle", "special", "spooky", "strategic", 
-        "subsidy", "sunflower", "swamp", "syntax", "tangerine", "telepathy", "thesis", "tremendous", "trinity", 
-        "twenty", "uncomfortable", "understand", "vague", "villain", "voluntary", "walnut", "warrior", "window", "zombie"
-    ],
-    advanced: [
-        "abditive", "abdomen", "abhorrent", "abscond", "accomplishment", "accommodate", "accumulation", "adolescent", 
-        "adversity", "aegis", "aerodynamic", "agriculture", "ampersand", "apostrophe", "arcane", "articulate", 
-        "aspiration", "assumption", "asunder", "asthma", "atmospheric", "authenticity", "beneficiary", "benevolence", 
-        "blizzard", "blossom", "bronchitis", "brusque", "calibration", "callow", "candlelight", "caustic", "celebration", 
-        "champagne", "charisma", "chlorophyll", "christmas", "clowder", "cognitive", "colonel", "kernel", "combustible", 
-        "commemorate", "commodity", "compulsory", "concentration", "consumption", "contour", "controversial", "cuisine", 
-        "dauntless", "deployment", "derogatory", "detrimental", "differentiation", "diplomatic", "disappointment", 
-        "disconsolate", "division", "doctrine", "elaborate", "embarrassment", "embassy", "enchantment", "encore", 
-        "endeavor", "endeavour", "environmental", "epiphany", "epsilon", "erratic", "ethereal", "euphoria", "exaggerate", 
-        "excalibur", "exorcism", "expenditure", "exponential", "extravagant", "fantasy", "favorable", "favourable", 
-        "featherweight", "fictitious", "fjord", "flamboyant", "fluorescent", "forthcoming", "frostbite", "fruition", 
-        "fugacious", "gastronomic", "gazebo", "germination", "gibberish", "gingerbread", "glacier", "gratitude", 
-        "gravestone", "hailstone", "heritage", "hexagonal", "hibernation", "hornswoggle", "hospital", "hourglass", 
-        "humanitarian", "hydrangea", "hypothesis", "ideological", "idiom", "imminent", "imprisonment", "independence", 
-        "indifference", "inhabitant", "insinuate", "insipid", "integration", "intermediate", "intermission", "introspect", 
-        "juxtaposition", "kangaroo", "languid", "legendary", "limousine", "livery", "limina", "mathematician", 
-        "melancholy", "metabolism", "methodology", "microorganism", "misconception", "mistletoe", "multiplication", 
-        "myopic", "nebulous", "necromancer", "negotiation", "neighboring", "neighbouring", "noctilucent", "nonplussed", 
-        "notorious", "obituary", "oblivious", "opaque", "optimism", "palatine", "pantograph", "paradise", "paragon", 
-        "parallel", "parenthesis", "participation", "passionate", "peppermint", "periodically", "personnel", "pestilence", 
-        "photographer", "pomegranate", "portfolio", "practitioner", "predominantly", "problematic", "proclamation", 
-        "procrastinate", "pronunciation", "propaganda", "protocol", "pygmy", "ravenous", "recession", "reincarnation", 
-        "reliability", "residential", "resilience", "resurrection", "revelation", "rhythm", "ricochet", "sabotage", 
-        "sachet", "sashay", "sapphire", "scholarship", "scythe", "sentimental", "separation", "shareholder", 
-        "significance", "skeleton", "snowflake", "solidarity", "spokesperson", "steadfast", "stereotype", "supposedly", 
-        "surrogate", "surveillance", "susceptible", "syllable", "symmetrical", "systematic", "technological", "thesaurus", 
-        "transaction", "translucent", "transparency", "transportation", "unprecedented", "validity", "venerate", 
-        "violation", "vulnerability", "wednesday", "wholeheartedly", "worthwhile"
-    ],
-    expert: [
-        "abacaxi", "abasia", "acculturate", "aforementioned", "aggrandize", "aggrandise", "agoraphobia", "agoraphobic", 
-        "altruistic", "ambidextrous", "ambiguous", "anaphylactic", "anemone", "anisosquaric", "apocryphal", "apothecary", 
-        "asphyxiation", "asthenosphere", "astigmatism", "ataraxy", "attorney", "bandeau", "belvedere", "betwixt", 
-        "blatherskite", "bodacious", "bogolanfini", "brucellosis", "bucolic", "cacophony", "calamitous", "calumny", 
-        "capoeira", "capricious", "captious", "cerulean", "charcuterie", "chauffeur", "chronological", "cinematographer", 
-        "clairvoyant", "clandestine", "coalescence", "codicil", "colloquialism", "comeuppance", "commodore", "compunction", 
-        "congregation", "consanguine", "consummate", "contradistinguish", "convivial", "correspondence", "counterintuitive", 
-        "culvert", "cyrillic", "defenestration", "deleterious", "depilatory", "diminution", "discombobulate", "dodecahedron", 
-        "ebullition", "eloquent", "elysian", "elision", "ennui", "epitome", "erroneous", "erudition", "esurient", 
-        "ethnomethodology", "evanesce", "extraterrestrial", "facsimile", "fastidious", "fissiparous", "flummox", "foible", 
-        "folliculitis", "foraminotomy", "fuchsia", "garrulous", "gentrification", "glaucomatous", "glockenspiel", 
-        "gobbledygook", "gobbledegook", "grandiloquent", "grimoire", "handkerchief", "harpsichord", "hemoglobin", 
-        "haemoglobin", "heterozygous", "hierarchy", "homeopathy", "homoeopathy", "homogeneous", "horticulturist", 
-        "hypermetropia", "iconoclast", "idiosyncratic", "incandescent", "inchoate", "incoagulable", "indefatigable", 
-        "ingenious", "irascible", "isometropia", "isthmus", "kaleidoscope", "lachrymose", "latitudinarian", 
-        "latitudinarianism", "legislation", "lexicography", "liaison", "loquacious", "lugubrious", "lymphangiography", 
-        "macabre", "magniloquent", "malapropism", "martyrdom", "mellifluous", "menagerie", "mendacious", "meretricious", 
-        "metempsychosis", "microminiaturisation", "microminiaturization", "milieu", "minuscule", "miniscule", "miscellaneous", 
-        "monochromatic", "monosyllabic", "multidimensionality", "municipal", "myriad", "narcissistic", "nauseous", "neophyte", 
-        "neuroplasticity", "nincompoop", "nocturne", "nocturn", "nomenclature", "noumenon", "nutritious", "obfuscation", 
-        "occhiolism", "onomatopoeia", "paradigm", "parliamentary", "paroxysm", "pecuniary", "percipient", "perfidious", 
-        "pernicious", "pessimistic", "phantasmagoria", "pharaoh", "farrow", "phenomenon", "phlegm", "photogeochemistry", 
-        "photosynthesis", "pirouette", "pneumatic", "polemic", "polychromatic", "polydactyly", "polymerization", 
-        "polymerisation", "predecessor", "prestigious", "psychological", "puerile", "pugnacious", "pycnidium", "querimony", 
-        "quixotry", "radiometeorograph", "rambunctious", "rehabilitation", "reminiscence", "rendezvous", "sagacious", 
-        "sanguine", "sarcophagus", "schizophrenic", "scintillate", "semaphore", "sententiously", "sequacious", "sequoia", 
-        "silhouette", "simultaneous", "soliloquy", "sovereignty", "subpoena", "subterranean", "supercentenarian", 
-        "supersede", "supercede", "syllepsis", "symbiosis", "syzygy", "tempestuous", "tetraphobia", "therapeutic", 
-        "thermionic", "thermoluminescence", "triphosphate", "tumultuous", "ubiquitous", "uncharacteristic", "unintelligible", 
-        "verbatim", "vexatious", "vignette", "xenogeneic", "zephyr", "zygote"
-    ],
-    genius: [
-        "abdominothoracic", "absquatulate", "acetaminophen", "achromatophil", "achromatophilia", "acquiesce", 
-        "allotransplantation", "anachronistic", "aneurysmorrhaphy", "antediluvian", "arthroereisis", "ascosporogenous", 
-        "aspartylglucosaminuria", "autothaumaturgist", "baccalaureate", "batrachophobia", "borborygmus", "bougainvillea", 
-        "bougainvillia", "bourgeoisie", "buckminsterfullerene", "bureaucracy", "chronopsychophysiology", 
-        "clinicoechocardiographic", "coalworkerspneumoconiosis", "compartmentalization", "compartmentalisation", 
-        "countermajoritarianism", "craniosynostosis", "cryptoendolithic", "dendrochronology", "deoxyribonucleic", 
-        "dichotomization", "dichotomisation", "eclaircissement", "effervescent", "electrotelethermometer", "entrepreneur", 
-        "ethnopsychopharmacology", "flibbertigibbet", "fossiliferous", "frontoethmoidectomy", "gastroenterologist", 
-        "geitonogamy", "geochronostratigraphical", "glyceraldehyde", "goniosynechialysis", "gubernatorial", "hemispherectomy", 
-        "hieroglyphics", "hydrochlorofluorocarbon", "hypercholesterolemia", "hypergammaglobulinemia", "hypergammaglobulinaemia", 
-        "hypergonadotropic", "hyperpolysyllabic", "hypoparathyroidism", "imperturbability", "incomprehensibility", 
-        "infinitesimal", "infundibulum", "institutionalization", "institutionalisation", "iodochlorohydroxyquinoline", 
-        "jurisprudence", "labyrinthine", "lepidopterology", "machiavellian", "mechanotransduction", "methemoglobinemia", 
-        "metonymic", "monocotyledonous", "morphodifferentiation", "necrobiosislipoidica", "neuroimmunomodulation", 
-        "neuropsychological", "oligonucleotide", "orthogeosyncline", "panproctocolectomy", "parallelogrammatic", 
-        "paraphernalia", "perspicacious", "photoreconnaissance", "plasmodiumfalciparum", "plenipotentiary", "portmanteau", 
-        "prestidigitation", "proceleusmatic", "prognostication", "pseudohyperaldosteronism", "pseudoparallelodromous", 
-        "pseudoriemannian", "psychoneuroimmunology", "psychopharmacotherapy", "psychotomimetic", "pulchritudinous", 
-        "pusillanimous", "quasiautobiographical", "quasquicentennial", "quetzalcoatlus", "quindecasyllabic", "quinquagintillion", 
-        "quoddamodotative", "radioallergosorbent", "rhinorrhagia", "schistochilaappendiculata", "septicemiccolibacillosis", 
-        "serendipity", "sesquipedalian", "spectrophotometer", "subcompartmentalization", "subcompartmentalisation", 
-        "subdermatoglyphic", "supererogatory", "superferromagnetism", "susurration", "temporomandibular", "thalassophobia", 
-        "thermochromatography", "tintinnabulation", "transinstitutionalization", "transinstitutionalisation", "trinitrotoluene", 
-        "utilitarianism", "verisimilitude", "worcestershire", "xanthogranulomatous", "xiphiplastron", "xylotypographic"
-    ],
-    master: [
-        "acetylglucocoroglaucigenin", "acrocephalopolydactylousdysplasia", "adrenocorticotropin", "adrenocorticotrophin", 
-        "anthropomorphization", "anthropomorphisation", "antidisestablishmentarianism", "antixerophthalmic", 
-        "bourgeoisification", "bromochlorodifluoromethane", "canaliculodacryocystorhinostomy", 
-        "chargoggagoggmanchauggagoggchaubunagungamaugg", "cholangiocholecystocholedochectomy", "cholangiopancreatography", 
-        "chondromyxohemangioendotheliosarcoma", "convolvulaceous", "corticopontocerebellar", "corynebacteriumpseudotuberculosis", 
-        "counterimmunoelectrophoresis", "dehydrothiotoluidine", "dermatofibrosarcomaprotuberans", "dextrodeorsumversion", 
-        "dichlorodiphenyltrichloroethane", "diisopropylfluorophosphate", "dermatofibrosislenticularisdisseminata", 
-        "dimethyldioctadecylammoniumchloride", "eellogofusciouhipoppokunurious", "encephalocraniocutaneouslipomatosis", 
-        "erythrocytapheresis", "esophagogastroduodenoscopy", "oesophagogastroduodenoscopy", "ferriprotoporphyrin", 
-        "floccinaucinihilipilification", "fluorotetraferriphlogopite", "fructosebisphosphatetriosephosphatelyase", 
-        "funkenzwangsvorstellung", "gastrocnemiosemimembranous", "gegenstandstheorie", "hematospectrophotometrically", 
-        "haematospectrophotometrically", "hexakosioihexekontahexaphobia", "hippopotomonstrosesquipedaliophobia", 
-        "hippopotomonstrosesquippedaliophobia", "honorificabilitudinity", "honourificabilitudinity", 
-        "hypothalamicpituitaryadrenocortical", "immunoelectrochemiluminescence", "inositolphosphorylceramide", 
-        "laparohysterosalpingooophorectomy", "laryngotracheobronchitis", "loncastuximabtesirine", "lymphangioleiomyomatosis", 
-        "micropachycephalosaurus", "neohesperidindihydrochalcone", "nonanonacontanonactanonaliagon", "nucleotidylexotransferase", 
-        "orotatephosphoribosyltransferase", "otorhinolaryngological", "paroxysmalnocturnalhemoglobinuria", 
-        "paroxysmalnocturnalhaemoglobinuria", "percutaneousendoscopicgastrostomy", "photoplethysmography", 
-        "phosphorodiamidatemorpholinooligomer", "pneumoencephalography", "pneumonoultramicroscopicsilicovolcanoconiosis", 
-        "polyphiloprogenitive", "pseudopseudohypoparathyroidism", "pseudorhombicuboctahedron", "psychoneuroendocrinological", 
-        "psychophysicotherapeutics", "pyrrolizidinealkaloidosis", "ribulosebisphosphatecarboxylaseoxygenase", 
-        "scaphotrapeziotrapezoidosteoarthritis", "sclerectoiridectomy", "spectrophotofluorometry", "sphenopalatineganglioneuralgia", 
-        "sphygmomanometer", "stereoelectroencephalography", "supercalifragilisticexpialidocious", "thymicstromallymphopoietin", 
-        "thyroparathyroidectomy", "tonsillopharyngitis", "uridinediphosphateglycosyltransferase", "uvulopalatopharyngoplasty", 
-        "ventriculocisternostomy", "xanthogranulomatouspyelonephritis", "zoanthroprosopometamorphopsia"
-    ]
+const rawWordLists = {
+    beginner: [ "aim", "air/heir", "baby", "bad", "bag", "ball/bawl", "bar", "bat", "bed", "bee/be", "best", "big", "bird", "blue/blew", "book", "bug", "bus", "cake", "car", "cat", "cool", "cow", "cry", "cup", "dad", "dog", "duck", "door", "eat", "egg", "elf", "end", "eye/aye", "face", "fire", "fish/phish", "five", "food", "foot", "four/for", "go", "gold", "hand", "hat", "ink", "job", "jog", "kiss", "lip", "milk", "mix", "mom", "moon", "mug", "newb/noob", "one/won", "pan", "pie/pi", "pink", "rain/reign/rein", "rat", "red/read", "ruby", "run", "sit", "size/sighs", "snow", "soda", "star", "suck", "sun/son", "stop", "tag", "tank", "tap", "three", "town", "tree", "two/too/to", "water", "wind", "word/whirred", "zoo" ],
+    novice: [ "absorb", "angel", "ash", "bark", "basket", "bean/been", "bingo", "black", "bomb", "boss", "brain", "bread/bred", "brown", "bunny", "burger", "burial", "cabin", "circle", "clever", "cliff", "clock", "clutch", "comply", "convey", "crowd", "dairy", "defy", "demon/daemon", "echo", "emoji", "erupt", "exert", "exile", "film", "filter", "flower/flour", "foggy", "forbid", "fry", "gender", "ghost", "giant", "greedy", "green", "grub", "hello", "hair/hare", "hotel", "house", "human", "hunt", "hungry", "intent", "iron", "irony", "lake", "land", "length", "margin", "melt", "meow", "monk", "nest", "noble/nobel", "orange", "park", "pasta", "pear/pair", "power", "prank", "pray/prey", "proof", "quack", "queen", "quill", "rally", "random", "reply", "robust", "rot/wrought", "seed", "shake", "shark", "sigh/psi", "sock", "spring", "state", "stem", "stew", "still", "stumble", "trauma", "twin", "twist", "update", "vein/vain", "walk", "way/weigh", "white", "workout", "wrist" ],
+    moderate: [ "abolish", "absence", "abstract", "agaric", "agnostic", "akin", "albeit", "alliance", "alphabet", "anatomical", "answer", "appetite", "armor/armour", "atone", "automatic", "await", "bamboo", "bayonet", "beach", "betray", "biography", "bizarre", "breakthrough", "broccoli", "catalog/catalogue", "center/centre", "chicken", "chronic", "church", "congratulate", "cooking", "creeper", "curious", "daffodil", "damage", "debris", "diesel", "dilate", "dolphin", "enact", "excellent", "familiar", "firefighter", "flavor/flavour", "formidable", "frolic", "furious", "gallant", "garage", "gradual", "growl", "guideline", "harbor/harbour", "heresy", "immobilize/immobilise", "integrity", "ionize/ionise", "jaded", "lactose", "larix", "lather", "leafy", "liable", "lightning", "magnificent", "meditate", "normal", "oasis", "obesity", "offender", "overdue/overdo", "paradox", "password", "pigeon/pidgin", "plethora", "powder", "present", "probably", "pulsar", "pumpkin", "pursuit", "purple", "recipient", "refrain", "refugee", "remarkable", "rye/wry", "rooster", "scrutiny", "secret", "seldom", "semicircle", "sigma", "sleigh/slay", "sniffle", "special", "spooky", "strategic", "subsidy", "sunflower", "swamp", "syntax", "tangerine", "telepathy", "thesis", "tremendous", "trinity", "twenty", "uncomfortable", "understand", "vague", "villain", "voluntary", "walnut", "warrior", "window", "zombie" ],
+    advanced: [ "abditive", "abdomen", "abhorrent", "abscond", "accomplishment", "accommodate", "accumulation", "adolescent", "adversity", "aegis", "aerodynamic", "agriculture", "ampersand", "apostrophe", "arcane", "articulate", "aspiration", "assumption", "asunder", "asthma", "atmospheric", "authenticity", "beneficiary", "benevolence", "blizzard", "blossom", "bronchitis", "brusque", "calibration", "callow", "candlelight", "caustic", "celebration", "champagne", "charisma", "chlorophyll", "christmas", "clowder", "cognitive", "colonel/kernel", "combustible", "commemorate", "commodity", "compulsory", "concentration", "consumption", "contour", "controversial", "cuisine", "dauntless", "deployment", "derogatory", "detrimental", "differentiation", "diplomatic", "disappointment", "disconsolate", "division", "doctrine", "elaborate", "embarrassment", "embassy", "enchantment", "encore", "endeavor/endeavour", "environmental", "epiphany", "epsilon", "erratic", "ethereal", "euphoria", "exaggerate", "excalibur", "exorcism", "expenditure", "exponential", "extravagant", "fantasy", "favorable/favourable", "featherweight", "fictitious", "fjord", "flamboyant", "fluorescent", "forthcoming", "frostbite", "fruition", "fugacious", "gastronomic", "gazebo", "germination", "gibberish", "gingerbread", "glacier", "gratitude", "gravestone", "hailstone", "heritage", "hexagonal", "hibernation", "hornswoggle", "hospital", "hourglass", "humanitarian", "hydrangea", "hypothesis", "ideological", "idiom", "imminent", "imprisonment", "independence", "indifference", "inhabitant", "insinuate", "insipid", "integration", "intermediate", "intermission", "introspect", "juxtaposition", "kangaroo", "languid", "legendary", "limousine", "livery", "limina", "mathematician", "melancholy", "metabolism", "methodology", "microorganism", "misconception", "mistletoe", "multiplication", "myopic", "nebulous", "necromancer", "negotiation", "neighboring/neighbouring", "noctilucent", "nonplussed", "notorious", "obituary", "oblivious", "opaque", "optimism", "palatine", "pantograph", "paradise", "paragon", "parallel", "parenthesis", "participation", "passionate", "peppermint", "periodically", "personnel", "pestilence", "photographer", "pomegranate", "portfolio", "practitioner", "predominantly", "problematic", "proclamation", "procrastinate", "pronunciation", "propaganda", "protocol", "pygmy", "ravenous", "recession", "reincarnation", "reliability", "residential", "resilience", "resurrection", "revelation", "rhythm", "ricochet", "sabotage", "sachet/sashay", "sapphire", "scholarship", "scythe", "sentimental", "separation", "shareholder", "significance", "skeleton", "snowflake", "solidarity", "spokesperson", "steadfast", "stereotype", "supposedly", "surrogate", "surveillance", "susceptible", "syllable", "symmetrical", "systematic", "technological", "thesaurus", "transaction", "translucent", "transparency", "transportation", "unprecedented", "validity", "venerate", "violation", "vulnerability", "wednesday", "wholeheartedly", "worthwhile" ],
+    expert: [ "abacaxi", "abasia", "acculturate", "aforementioned", "aggrandize/aggrandise", "agoraphobia", "agoraphobic", "altruistic", "ambidextrous", "ambiguous", "anaphylactic", "anemone", "anisosquaric", "apocryphal", "apothecary", "asphyxiation", "asthenosphere", "astigmatism", "ataraxy", "attorney", "bandeau", "belvedere", "betwixt", "blatherskite", "bodacious", "bogolanfini", "brucellosis", "bucolic", "cacophony", "calamitous", "calumny", "capoeira", "capricious", "captious", "cerulean", "charcuterie", "chauffeur", "chronological", "cinematographer", "clairvoyant", "clandestine", "coalescence", "codicil", "colloquialism", "comeuppance", "commodore", "compunction", "congregation", "consanguine", "consummate", "contradistinguish", "convivial", "correspondence", "counterintuitive", "culvert", "cyrillic", "defenestration", "deleterious", "depilatory", "diminution", "discombobulate", "dodecahedron", "ebullition", "eloquent", "elysian/elision", "ennui", "epitome", "erroneous", "erudition", "esurient", "ethnomethodology", "evanesce", "extraterrestrial", "facsimile", "fastidious", "fissiparous", "flummox", "foible", "folliculitis", "foraminotomy", "fuchsia", "garrulous", "gentrification", "glaucomatous", "glockenspiel", "gobbledygook/gobbledegook", "grandiloquent", "grimoire", "handkerchief", "harpsichord", "hemoglobin/haemoglobin", "heterozygous", "hierarchy", "homeopathy/homoeopathy", "homogeneous", "horticulturist", "hypermetropia", "iconoclast", "idiosyncratic", "incandescent", "inchoate", "incoagulable", "indefatigable", "ingenious", "irascible", "isometropia", "isthmus", "kaleidoscope", "lachrymose", "latitudinarian", "latitudinarianism", "legislation", "lexicography", "liaison", "loquacious", "lugubrious", "lymphangiography", "macabre", "magniloquent", "malapropism", "martyrdom", "mellifluous", "menagerie", "mendacious", "meretricious", "metempsychosis", "microminiaturisation/microminiaturization", "milieu", "minuscule/miniscule", "miscellaneous", "monochromatic", "monosyllabic", "multidimensionality", "municipal", "myriad", "narcissistic", "nauseous", "neophyte", "neuroplasticity", "nincompoop", "nocturne/nocturn", "nomenclature", "noumenon", "nutritious", "obfuscation", "occhiolism", "onomatopoeia", "paradigm", "parliamentary", "paroxysm", "pecuniary", "percipient", "perfidious", "pernicious", "pessimistic", "phantasmagoria", "pharaoh/farrow", "phenomenon", "phlegm", "photogeochemistry", "photosynthesis", "pirouette", "pneumatic", "polemic", "polychromatic", "polydactyly", "polymerization/polymerisation", "predecessor", "prestigious", "psychological", "puerile", "pugnacious", "pycnidium", "querimony", "quixotry", "radiometeorograph", "rambunctious", "rehabilitation", "reminiscence", "rendezvous", "sagacious", "sanguine", "sarcophagus", "schizophrenic", "scintillate", "semaphore", "sententiously", "sequacious", "sequoia", "silhouette", "simultaneous", "soliloquy", "sovereignty", "subpoena", "subterranean", "supercentenarian", "supersede/supercede", "syllepsis", "symbiosis", "syzygy", "tempestuous", "tetraphobia", "therapeutic", "thermionic", "thermoluminescence", "triphosphate", "tumultuous", "ubiquitous", "uncharacteristic", "unintelligible", "verbatim", "vexatious", "vignette", "xenogeneic", "zephyr", "zygote" ],
+    genius: [ "abdominothoracic", "absquatulate", "acetaminophen", "achromatophil", "achromatophilia", "acquiesce", "allotransplantation", "anachronistic", "aneurysmorrhaphy", "antediluvian", "arthroereisis", "ascosporogenous", "aspartylglucosaminuria", "autothaumaturgist", "baccalaureate", "batrachophobia", "borborygmus", "bougainvillea/bougainvillia", "bourgeoisie", "buckminsterfullerene", "bureaucracy", "chronopsychophysiology", "clinicoechocardiographic", "coalworkerspneumoconiosis", "compartmentalization/compartmentalisation", "countermajoritarianism", "craniosynostosis", "cryptoendolithic", "dendrochronology", "deoxyribonucleic", "dichotomization/dichotomisation", "eclaircissement", "effervescent", "electrotelethermometer", "entrepreneur", "ethnopsychopharmacology", "flibbertigibbet", "fossiliferous", "frontoethmoidectomy", "gastroenterologist", "geitonogamy", "geochronostratigraphical", "glyceraldehyde", "goniosynechialysis", "gubernatorial", "hemispherectomy", "hieroglyphics", "hydrochlorofluorocarbon", "hypercholesterolemia", "hypergammaglobulinemia/hypergammaglobulinaemia", "hypergonadotropic", "hyperpolysyllabic", "hypoparathyroidism", "imperturbability", "incomprehensibility", "infinitesimal", "infundibulum", "institutionalization/institutionalisation", "iodochlorohydroxyquinoline", "jurisprudence", "labyrinthine", "lepidopterology", "machiavellian", "mechanotransduction", "methemoglobinemia", "metonymic", "monocotyledonous", "morphodifferentiation", "necrobiosislipoidica", "neuroimmunomodulation", "neuropsychological", "oligonucleotide", "orthogeosyncline", "panproctocolectomy", "parallelogrammatic", "paraphernalia", "perspicacious", "photoreconnaissance", "plasmodiumfalciparum", "plenipotentiary", "portmanteau", "prestidigitation", "proceleusmatic", "prognostication", "pseudohyperaldosteronism", "pseudoparallelodromous", "pseudoriemannian", "psychoneuroimmunology", "psychopharmacotherapy", "psychotomimetic", "pulchritudinous", "pusillanimous", "quasiautobiographical", "quasquicentennial", "quetzalcoatlus", "quindecasyllabic", "quinquagintillion", "quoddamodotative", "radioallergosorbent", "rhinorrhagia", "schistochilaappendiculata", "septicemiccolibacillosis", "serendipity", "sesquipedalian", "spectrophotometer", "subcompartmentalization/subcompartmentalisation", "subdermatoglyphic", "supererogatory", "superferromagnetism", "susurration", "temporomandibular", "thalassophobia", "thermochromatography", "tintinnabulation", "transinstitutionalization/transinstitutionalisation", "trinitrotoluene", "utilitarianism", "verisimilitude", "worcestershire", "xanthogranulomatous", "xiphiplastron", "xylotypographic" ],
+    master: [ "acetylglucocoroglaucigenin", "acrocephalopolydactylousdysplasia", "adrenocorticotropin/adrenocorticotrophin", "anthropomorphization/anthropomorphisation", "antidisestablishmentarianism", "antixerophthalmic", "bourgeoisification", "bromochlorodifluoromethane", "canaliculodacryocystorhinostomy", "chargoggagoggmanchauggagoggchaubunagungamaugg", "cholangiocholecystocholedochectomy", "cholangiopancreatography", "chondromyxohemangioendotheliosarcoma", "convolvulaceous", "corticopontocerebellar", "corynebacteriumpseudotuberculosis", "counterimmunoelectrophoresis", "dehydrothiotoluidine", "dermatofibrosarcomaprotuberans", "dextrodeorsumversion", "dichlorodiphenyltrichloroethane", "diisopropylfluorophosphate", "dermatofibrosislenticularisdisseminata", "dimethyldioctadecylammoniumchloride", "eellogofusciouhipoppokunurious", "encephalocraniocutaneouslipomatosis", "erythrocytapheresis", "esophagogastroduodenoscopy/oesophagogastroduodenoscopy", "ferriprotoporphyrin", "floccinaucinihilipilification", "fluorotetraferriphlogopite", "fructosebisphosphatetriosephosphatelyase", "funkenzwangsvorstellung", "gastrocnemiosemimembranous", "gegenstandstheorie", "hematospectrophotometrically/haematospectrophotometrically", "hexakosioihexekontahexaphobia", "hippopotomonstrosesquipedaliophobia/hippopotomonstrosesquippedaliophobia", "honorificabilitudinity/honourificabilitudinity", "hypothalamicpituitaryadrenocortical", "immunoelectrochemiluminescence", "inositolphosphorylceramide", "laparohysterosalpingooophorectomy", "laryngotracheobronchitis", "loncastuximabtesirine", "lymphangioleiomyomatosis", "micropachycephalosaurus", "neohesperidindihydrochalcone", "nonanonacontanonactanonaliagon", "nucleotidylexotransferase", "orotatephosphoribosyltransferase", "otorhinolaryngological", "paroxysmalnocturnalhemoglobinuria/paroxysmalnocturnalhaemoglobinuria", "percutaneousendoscopicgastrostomy", "photoplethysmography", "phosphorodiamidatemorpholinooligomer", "pneumoencephalography", "pneumonoultramicroscopicsilicovolcanoconiosis", "polyphiloprogenitive", "pseudopseudohypoparathyroidism", "pseudorhombicuboctahedron", "psychoneuroendocrinological", "psychophysicotherapeutics", "pyrrolizidinealkaloidosis", "ribulosebisphosphatecarboxylaseoxygenase", "scaphotrapeziotrapezoidosteoarthritis", "sclerectoiridectomy", "spectrophotofluorometry", "sphenopalatineganglioneuralgia", "sphygmomanometer", "stereoelectroencephalography", "supercalifragilisticexpialidocious", "thymicstromallymphopoietin", "thyroparathyroidectomy", "tonsillopharyngitis", "uridinediphosphateglycosyltransferase", "uvulopalatopharyngoplasty", "ventriculocisternostomy", "xanthogranulomatouspyelonephritis", "zoanthroprosopometamorphopsia" ]
 };
+
+// Listen flach machen (Homophone an den Slashes trennen)
+const flatWordLists = {};
+for (let diff in rawWordLists) {
+    flatWordLists[diff] = [];
+    rawWordLists[diff].forEach(w => {
+        if (w.includes('/')) {
+            flatWordLists[diff].push(...w.split('/').map(x => x.trim()));
+        } else {
+            flatWordLists[diff].push(w);
+        }
+    });
+}
+
+// --- DECK-SYSTEM (SHUFFLE BAG) ---
+// Verhindert, dass Wörter doppelt vorkommen, bevor nicht alle anderen dran waren
+let currentDeck = [];
+
+function shuffleArray(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
+function getNextWord() {
+    let selectedDiff = difficultySelect.value;
+    
+    if (currentDeck.length === 0) {
+        if (selectedDiff === 'random') {
+            // Alle Wörter aus allen Listen in einen riesigen Topf werfen
+            let allWords = [];
+            for (let key in flatWordLists) {
+                allWords = allWords.concat(flatWordLists[key]);
+            }
+            currentDeck = shuffleArray([...allWords]);
+        } else {
+            currentDeck = shuffleArray([...flatWordLists[selectedDiff]]);
+        }
+    }
+    return currentDeck.pop().toLowerCase();
+}
 
 // DOM Elements
 const difficultySelect = document.getElementById('difficulty');
@@ -213,6 +114,15 @@ showWordToggle.addEventListener('change', () => {
     if(isPlaying) hiddenInput.focus();
 });
 
+// Wenn sich die Schwierigkeit ändert, muss das Deck geleert und neu gemischt werden
+difficultySelect.addEventListener('change', () => { 
+    currentDeck = []; // Reset Deck!
+    if(isPlaying) startGame(); 
+});
+timerModeSelect.addEventListener('change', () => { 
+    if(isPlaying) startGame(); 
+});
+
 // --- VOICE ENGINE ---
 let availableVoices = [];
 
@@ -256,7 +166,7 @@ async function fetchDefinition(word) {
         const def = data[0].meanings[0].definitions[0].definition;
         definitionBox.innerHTML = `📖 <b>Definition:</b> ${def}`;
     } catch (e) {
-        definitionBox.innerHTML = `📖 <b>Definition:</b> <i>Not found in standard dictionary. (Likely a highly specialized/compound term).</i>`;
+        definitionBox.innerHTML = `📖 <b>Definition:</b> <i>Not found in standard dictionary. (Likely a specialized/compound term).</i>`;
     }
 }
 
@@ -288,22 +198,16 @@ function startGame() {
         clearInterval(timerInterval);
     }
 
-    nextWord();
+    startNewWordRound();
 }
 
-function nextWord() {
+function startNewWordRound() {
     isPlaying = true;
-    let selectedDiff = difficultySelect.value;
     
-    if (selectedDiff === 'random') {
-        const categories = Object.keys(wordLists);
-        selectedDiff = categories[Math.floor(Math.random() * categories.length)];
-    }
-    
-    const words = wordLists[selectedDiff];
-    currentWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
+    // Neues Deck-System nutzt die Funktion anstatt reinem Math.random()
+    currentWord = getNextWord();
 
-    // Reset Word UI & Set Max Length to prevent over-typing (QoL Fix)
+    // Reset Word UI & Set Max Length to prevent over-typing
     hiddenInput.value = "";
     hiddenInput.disabled = false;
     hiddenInput.setAttribute('maxlength', currentWord.length); 
@@ -446,7 +350,7 @@ function handleWordEnd(isCorrect) {
         totalCorrectSpan.textContent = totalCorrect;
 
         const mode = timerModeSelect.value;
-        setTimeout(nextWord, mode === 'timeattack' ? 100 : 500); 
+        setTimeout(startNewWordRound, mode === 'timeattack' ? 100 : 500); 
     } else {
         streak = 0; 
         scoreSpan.textContent = streak;
@@ -462,12 +366,12 @@ function handleWordEnd(isCorrect) {
         if(timerModeSelect.value === 'timeattack') {
             setTimeout(() => {
                 if(!showWordToggle.checked) wordDisplay.classList.add('hide-word');
-                nextWord();
+                startNewWordRound();
             }, 1000);
         } else {
             setTimeout(() => {
                 if(!showWordToggle.checked) wordDisplay.classList.add('hide-word');
-                nextWord();
+                startNewWordRound();
             }, 2500);
         }
     }
@@ -511,5 +415,3 @@ document.addEventListener('keydown', (e) => {
 });
 
 startBtn.addEventListener('click', startGame);
-difficultySelect.addEventListener('change', () => { if(isPlaying) startGame(); });
-timerModeSelect.addEventListener('change', () => { if(isPlaying) startGame(); });
