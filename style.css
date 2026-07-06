@@ -10,6 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    padding: 20px; /* Padding hinzugefügt, damit es auf dem Handy nicht am Rand klebt */
 }
 
 .container {
@@ -32,7 +33,15 @@ h1 {
 }
 
 .controls-wrapper { display: flex; flex-direction: column; gap: 12px; }
-.controls { display: flex; gap: 10px; justify-content: center; align-items: center; }
+
+/* Menüs brechen jetzt um, wenn der Platz zu klein wird */
+.controls { 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+    align-items: center; 
+    flex-wrap: wrap; 
+}
 
 select {
     padding: 10px 12px;
@@ -45,8 +54,10 @@ select {
     outline: none;
     cursor: pointer;
     flex: 1;
+    min-width: 140px; /* Wichtig für kleine Bildschirme */
     transition: border-color 0.2s;
 }
+
 select:focus { border-color: #38bdf8; }
 
 .toggle-controls select { flex: 2; }
@@ -55,9 +66,11 @@ select:focus { border-color: #38bdf8; }
 .toggle-switch {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     cursor: pointer;
     flex: 1;
+    min-width: 150px;
     background: #0f172a;
     padding: 8px 12px;
     border-radius: 10px;
@@ -150,12 +163,18 @@ button:hover { background-color: #0ea5e9; transform: translateY(-2px); }
 }
 
 /* Character States */
-.char { color: #475569; position: relative; transition: color 0.1s; border-bottom: 2px solid transparent; }
+.char { 
+    color: #475569; 
+    position: relative; 
+    transition: color 0.1s; 
+    border-bottom: 3px solid transparent; 
+    margin: 0 1px; /* Etwas Abstand zwischen Buchstaben */
+}
 .char.correct { color: #4ade80; text-shadow: 0 0 12px rgba(74, 222, 128, 0.3); border-bottom-color: transparent !important; }
 .char.incorrect { color: #f87171; background-color: rgba(248, 113, 113, 0.15); border-radius: 4px; border-bottom-color: transparent !important; }
 
-/* Hidden Word Mode (Hangman style) */
-.hide-word .char { color: transparent; border-bottom-color: #475569; margin: 0 2px; padding: 0 2px; }
+/* Hidden Word Mode (Hangman style) - verbessert! */
+.hide-word .char { color: transparent; border-bottom-color: #64748b; margin: 0 3px; padding: 0 2px; }
 .hide-word .char.correct { color: #4ade80; }
 .hide-word .char.incorrect { color: #f87171; }
 
@@ -186,8 +205,9 @@ button:hover { background-color: #0ea5e9; transform: translateY(-2px); }
 .action-hints {
     display: flex; justify-content: space-between; align-items: center;
     color: #64748b; font-size: 0.9rem;
+    flex-wrap: wrap; gap: 10px;
 }
-.audio-btns { display: flex; gap: 8px; }
+.audio-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .icon-btn {
     background: #334155; color: #e2e8f0; width: auto; padding: 8px 12px;
     font-size: 0.85rem; border-radius: 8px; font-weight: 600;
@@ -201,17 +221,31 @@ button:hover { background-color: #0ea5e9; transform: translateY(-2px); }
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     z-index: 10; border-radius: 14px;
 }
-#summary-screen h2 { color: #f87171; font-size: 2rem; margin-bottom: 15px; }
+#summary-screen h2 { color: #f87171; font-size: 2rem; margin-bottom: 15px; text-align: center; }
 .summary-stats { text-align: center; font-size: 1.2rem; margin-bottom: 20px; line-height: 1.6; }
 .summary-stats span { color: #38bdf8; font-weight: 800; font-size: 1.4rem; }
-.restart-hint { color: #94a3b8; font-size: 0.9rem; animation: pulse 2s infinite; }
+.restart-hint { color: #94a3b8; font-size: 0.9rem; animation: pulse 2s infinite; text-align: center; }
 @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
 /* Stats */
 .stats-area {
-    display: flex; justify-content: space-around;
+    display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px;
     background-color: #0f172a; padding: 15px; border-radius: 14px; margin-top: 15px;
 }
 .stat-box { display: flex; flex-direction: column; align-items: center; color: #94a3b8; font-size: 0.85rem; }
 .stat-value { font-size: 1.6rem; font-weight: 800; color: #f8fafc; margin-top: 5px; }
 .highlight .stat-value { color: #facc15; }
+
+/* Responsive Media Queries (Handy / Kleine Monitore) */
+@media (max-width: 550px) {
+    h1 { font-size: 1.6rem; }
+    .word-display { font-size: 1.6rem; }
+    .action-hints { flex-direction: column; align-items: stretch; }
+    .audio-btns { justify-content: space-between; }
+    .audio-btns button { flex: 1; }
+    .hint-text { text-align: center; margin-top: 5px; }
+    .stats-area { flex-direction: column; gap: 15px; }
+    .stat-box { flex-direction: row; justify-content: space-between; width: 100%; border-bottom: 1px solid #1e293b; padding-bottom: 8px;}
+    .stat-box:last-child { border-bottom: none; padding-bottom: 0;}
+    .stat-value { margin-top: 0; font-size: 1.2rem; }
+}
