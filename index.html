@@ -64,11 +64,10 @@
             <!-- Typing Interface -->
             <div class="typing-container" id="typing-container">
                 
-                <!-- Summary Screen -->
+                <!-- Summary Screen (Only for Time Attack) -->
                 <div id="summary-screen" class="hidden">
                     <h2>Time's Up! ⏰</h2>
                     <div class="summary-stats">
-                        <p>Final WPM: <span id="final-wpm">0</span></p>
                         <p>Words Spelled: <span id="final-words">0</span></p>
                     </div>
                     <p class="restart-hint">Press <b>Enter</b> to restart</p>
@@ -78,6 +77,7 @@
                     <!-- Spans will be injected here -->
                 </div>
                 
+                <!-- Hidden input now receives dynamic maxlength in JS -->
                 <input type="text" id="hidden-input" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
             </div>
 
@@ -87,7 +87,10 @@
             </div>
             
             <div class="action-hints">
-                <button id="replay-btn" class="icon-btn" title="Replay Audio (TAB)">🔊 Replay Word (TAB)</button>
+                <div class="audio-btns">
+                    <button id="replay-btn" class="icon-btn" title="Normal Speed">🔊 Replay (TAB)</button>
+                    <button id="slow-replay-btn" class="icon-btn" title="Slow Speed">🐢 Slow (SHIFT)</button>
+                </div>
                 <span class="hint-text">Hit <b>ESC</b> to skip</span>
             </div>
         </main>
