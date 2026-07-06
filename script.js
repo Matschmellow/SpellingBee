@@ -1,4 +1,4 @@
-// Raw Word Lists (gekürtzt dargestellt, behalte deine riesige Liste hier drinnen)
+// Raw Word Lists
 const rawWordLists = {
     beginner: [ "aim", "air/heir", "baby", "bad", "bag", "ball/bawl", "bar", "bat", "bed", "bee/be", "best", "big", "bird", "blue/blew", "book", "bug", "bus", "cake", "car", "cat", "cool", "cow", "cry", "cup", "dad", "dog", "duck", "door", "eat", "egg", "elf", "end", "eye/aye", "face", "fire", "fish/phish", "five", "food", "foot", "four/for", "go", "gold", "hand", "hat", "ink", "job", "jog", "kiss", "lip", "milk", "mix", "mom", "moon", "mug", "newb/noob", "one/won", "pan", "pie/pi", "pink", "rain/reign/rein", "rat", "red/read", "ruby", "run", "sit", "size/sighs", "snow", "soda", "star", "suck", "sun/son", "stop", "tag", "tank", "tap", "three", "town", "tree", "two/too/to", "water", "wind", "word/whirred", "zoo" ],
     novice: [ "absorb", "angel", "ash", "bark", "basket", "bean/been", "bingo", "black", "bomb", "boss", "brain", "bread/bred", "brown", "bunny", "burger", "burial", "cabin", "circle", "clever", "cliff", "clock", "clutch", "comply", "convey", "crowd", "dairy", "defy", "demon/daemon", "echo", "emoji", "erupt", "exert", "exile", "film", "filter", "flower/flour", "foggy", "forbid", "fry", "gender", "ghost", "giant", "greedy", "green", "grub", "hello", "hair/hare", "hotel", "house", "human", "hunt", "hungry", "intent", "iron", "irony", "lake", "land", "length", "margin", "melt", "meow", "monk", "nest", "noble/nobel", "orange", "park", "pasta", "pear/pair", "power", "prank", "pray/prey", "proof", "quack", "queen", "quill", "rally", "random", "reply", "robust", "rot/wrought", "seed", "shake", "shark", "sigh/psi", "sock", "spring", "state", "stem", "stew", "still", "stumble", "trauma", "twin", "twist", "update", "vein/vain", "walk", "way/weigh", "white", "workout", "wrist" ],
@@ -43,6 +43,7 @@ const progressBar = document.getElementById('progress-bar');
 const wpmDisplay = document.getElementById('wpm-display');
 
 const summaryScreen = document.getElementById('summary-screen');
+const finalWpmSpan = document.getElementById('final-wpm');
 const finalWordsSpan = document.getElementById('final-words');
 
 const scoreSpan = document.getElementById('score');
@@ -57,7 +58,7 @@ let maxTime = 0;
 let streak = 0;
 let isPlaying = false;
 let firstKeystroke = false;
-let wordStartTime = 0; // Für WPM pro Wort
+let wordStartTime = 0;
 
 // Globale Variablen für Time Attack
 let sessionWordsSpelled = 0;
@@ -169,7 +170,6 @@ function nextWord() {
     hiddenInput.disabled = false;
     firstKeystroke = false;
     
-    // Always remove "incorrect" state from word-display on new word
     wordDisplay.classList.remove('force-show-error');
     
     wordDisplay.innerHTML = currentWord.split('').map(char => `<span class="char">${char}</span>`).join('');
@@ -213,7 +213,6 @@ function updateAdaptiveTimer() {
 }
 
 function updateTimeAttackTimer() {
-    // Timer doesn't decrement until first letter is typed in the whole session
     if (!firstKeystroke && sessionWordsSpelled === 0) return; 
 
     timeLeft--;
@@ -233,6 +232,7 @@ function updateTimeAttackTimer() {
         clearInterval(timerInterval);
         hiddenInput.disabled = true;
         summaryScreen.classList.remove('hidden');
+        finalWpmSpan.textContent = wpmDisplay.textContent;
         finalWordsSpan.textContent = sessionWordsSpelled;
     }
 }
@@ -259,7 +259,7 @@ hiddenInput.addEventListener('input', () => {
 
     if (!firstKeystroke && typed.length > 0) {
         firstKeystroke = true;
-        wordStartTime = Date.now(); // Startet WPM-Messung für dieses Wort
+        wordStartTime = Date.now(); 
     }
 
     updateLiveWPM();
@@ -309,7 +309,6 @@ function handleWordEnd(isCorrect) {
         streak = 0; 
         scoreSpan.textContent = streak;
         
-        // Show errors visually even if Ghost mode is hidden
         wordDisplay.classList.remove('hide-word');
         const spans = wordDisplay.querySelectorAll('.char');
         spans.forEach(s => {
@@ -347,7 +346,7 @@ document.addEventListener('keydown', (e) => {
     }
     
     if (e.key === 'Tab' && isPlaying) {
-        e.preventDefault(); // Verhindert, dass man aus dem Feld tabt
+        e.preventDefault(); 
         speakWord(currentWord);
         hiddenInput.focus();
     }
